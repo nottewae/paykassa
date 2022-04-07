@@ -30,7 +30,7 @@ class PaykassaPay
         @token = api_password
         @_auth = {domain: domain, api_id: api_id, api_key: api_key, test: test}
     end
-    def pay(amount: amount, shop: shop, currency: currency, system_name: system_name, paid_commission: "shop", number:, tag:, priority:)
+    def pay(amount: , shop: , currency: , system_name: , paid_commission: "shop", number:, tag:, priority:)
         data = {
             amount: amount, 
             shop: shop, 
@@ -43,7 +43,7 @@ class PaykassaPay
         }
         make_request("api_payment",data)
     end
-    def balance(shop: shop) 
+    def balance(shop: ) 
         data = {
             shop: shop,
             pi_id: api_id, 

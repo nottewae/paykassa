@@ -18,7 +18,7 @@ module Paykassa
       end
       
     end
-    def pay(amount: amount, shop: shop, currency: currency, system_name: system_name, paid_commission: "shop", number:, tag:, priority:)
+    def pay(amount: , shop: , currency: , system_name: , paid_commission: "shop", number:, tag:, priority:)
       raise "api_key not present!" if @paykassa_pay.nil?
       @paykassa_pay.pay({
         amount: amount,
