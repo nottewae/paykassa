@@ -12,9 +12,8 @@ module Paykassa
         @paykassa_pay = nil
       else
         @paykassa_pay = PaykassaPay.new(
-          {
-            domain: domain, api_id: api_id, api_key: api_key, test: test
-          }
+            domain: domain, api_id: api_id,
+            api_key: api_key, test: test
         )
       end
     end
