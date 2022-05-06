@@ -27,7 +27,7 @@ class PaykassaPay
         ethereum_erc20: 32
     }
     def initialize(domain:, api_id:, api_key:, test: false)
-        @token = api_password
+        @token = api_key
         @_auth = {domain: domain, api_id: api_id, api_key: api_key, test: test}
     end
     def pay(amount: , shop: , currency: , system_name: , paid_commission: "shop", number:, tag:, priority:)
