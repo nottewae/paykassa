@@ -2,6 +2,7 @@
 
 require_relative "paykassa/version"
 require_relative "paykassa/order"
+require_relative "paykassa/pay"
 module Paykassa
   class Error < StandardError; end
   class Paykassa 
