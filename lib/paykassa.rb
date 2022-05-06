@@ -4,7 +4,7 @@ require_relative "paykassa/version"
 require_relative "paykassa/order"
 module Paykassa
   class Error < StandardError; end
-  class Order 
+  class Paykassa 
     def initialize(domain, sci_id, sci_key, api_id = nil, api_key = nil, test)
       @paykassa_order = PaykassaOrder.new({domain: domain, sci_id: sci_id, sci_key: sci_key})
       if api_id.nil? 
@@ -16,7 +16,6 @@ module Paykassa
           }
         )
       end
-      
     end
     def pay(amount: , shop: , currency: , system_name: , paid_commission: "shop", number:, tag:, priority:)
       raise "api_key not present!" if @paykassa_pay.nil?
@@ -59,8 +58,5 @@ module Paykassa
       amount = res[:data][:amount]
       {order_id: order_id, amount: amount}
     end
-
-    
-  end 
-
+  end
 end
