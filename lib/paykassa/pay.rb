@@ -1,8 +1,9 @@
 require 'net/http'
 
 class PaykassaPay 
-    BASE_URL = "https://paykassa.app/api/0.5/index.php"
-    RATE_URL = "https://currency.paykassa.pro/index.php"
+    BASE_URL = URI("https://paykassa.app/api/0.5/index.php")
+    RATE_URL = URI("https://currency.paykassa.pro/index.php")
+    BASE_SCI_URI = URI('https://paykassa.pro/sci/0.3/index.php')
     CURRENCIES=[
         "USD", "RUB", "BTC", "ETH", "LTC", "DOGE", "DASH", "BCH", "ZEC",
         "XRP", "TRX", "XLM", "BNB", "USDT", "ADA", "EOS", "GBP", "EUR", 
@@ -46,8 +47,8 @@ class PaykassaPay
     def balance(shop: ) 
         data = {
             shop: shop,
-            pi_id: api_id, 
-            api_key: api_key
+            pi_id: @_auth[:api_id], 
+            api_key: @_auth[:api_key]
         }
         make_request("api_get_shop_balance", data, false)
     end
@@ -71,7 +72,7 @@ class PaykassaPay
     end
     private
     def  make_request(func,data,merge_auth = true, url= nil)
-        data = data.merge({func: func}) if func
+        data = data.merge({func: func}) if !func.nil?
         data = data.merge(@_auth) if merge_auth
         url = BASE_SCI_URI if url.nil?
         res = Net::HTTP.post_form(url, data)
