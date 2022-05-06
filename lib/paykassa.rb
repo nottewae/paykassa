@@ -5,7 +5,7 @@ require_relative "paykassa/order"
 module Paykassa
   class Error < StandardError; end
   class Paykassa 
-    def initialize(domain, sci_id, sci_key, api_id = nil, api_key = nil, test)
+    def initialize(domain:, sci_id:, sci_key:, api_id: nil, api_key: nil, test:)
       @paykassa_order = PaykassaOrder.new({domain: domain, sci_id: sci_id, sci_key: sci_key})
       if api_id.nil? 
         @paykassa_pay = nil
@@ -17,6 +17,7 @@ module Paykassa
         )
       end
     end
+    
     def pay(amount: , shop: , currency: , system_name: , paid_commission: "shop", number:, tag:, priority:)
       raise "api_key not present!" if @paykassa_pay.nil?
       @paykassa_pay.pay({
@@ -30,6 +31,7 @@ module Paykassa
         priority: priority
       })
     end
+ 
     def balance(shop:)
       raise "api_key not present!" if @paykassa_pay.nil?
       @paykassa_pay.balance(shop: shop)
@@ -37,10 +39,8 @@ module Paykassa
     def rate(c_in, c_out) 
       @paykassa_pay.currency_rate(c_in, c_out)
     end
-    def create_order(amount:, currency:, order_id:, system:, comment:) 
-      create_order(amount, currency, order_id, system, comment)
-    end
-    def create_order(amount, currency, order_id, system, comment="from paykassa gem")
+
+    def create_order(amount:, currency:, order_id:, system:, comment: "from paykassa gem")
       order = @paykassa_order.create_order(
         amount: amount, 
         currency: currency, 
@@ -51,7 +51,7 @@ module Paykassa
       raise StandardError.new(order[:message]) if order[:error]
       url = order[:data][:url]
     end
-    def confirm_order(hash)
+    def confirm_order(hash:)
       result = @paykassa_order.confirm_order(hash)
       raise StandardError.new(result[:message]) if result[:error]
       order_id = res[:data][:order_id]
