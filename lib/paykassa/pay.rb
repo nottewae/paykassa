@@ -58,16 +58,20 @@ class PaykassaPay
         if !CURRENCIES.include? out 
             raise "#{out} not include in currencies: #{CURRENCIES}"
         end
-        make_request(
+        data = {
             currency_in: inn, 
-            currency_out: out,
+            currency_out: out
+        }
+        make_request(
+            nil,
+            data,
             false, 
             RATE_URL
         )
     end
     private
     def  make_request(func,data,merge_auth = true, url= nil)
-        data = data.merge({func: func})
+        data = data.merge({func: func}) if func
         data = data.merge(@_auth) if merge_auth
         url = BASE_SCI_URI if url.nil?
         res = Net::HTTP.post_form(url, data)
