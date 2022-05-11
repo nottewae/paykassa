@@ -6,14 +6,17 @@ require_relative "paykassa/pay"
 module Paykassa
   class Error < StandardError; end
   class Paykassa 
-    def initialize(domain:, sci_id:, sci_key:, api_id: nil, api_key: nil, test:)
-      @paykassa_order = PaykassaOrder.new({domain: domain, sci_id: sci_id, sci_key: sci_key})
+    def initialize(domain:, sci_id:, sci_key:, api_id: nil, api_key: nil, test:, logger: nil)
+
+      @logger=logger
+      puts "logger paykassa: #{@logger.inspect}"
+      @paykassa_order = PaykassaOrder.new({domain: domain, sci_id: sci_id, sci_key: sci_key}, logger)
       if api_id.nil? 
         @paykassa_pay = nil
       else
         @paykassa_pay = PaykassaPay.new(
             domain: domain, api_id: api_id,
-            api_key: api_key, test: test
+            api_key: api_key, test: test, logger: logger
         )
       end
     end

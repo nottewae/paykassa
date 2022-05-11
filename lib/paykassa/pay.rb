@@ -27,7 +27,8 @@ class PaykassaPay
         binancesmartchain_bep20: 31, # available currencies USDT, BUSD, USDC, ADA, EOS, BTC, ETH, DOGE    
         ethereum_erc20: 32
     }
-    def initialize(domain:, api_id:, api_key:, test: false)
+    def initialize(domain:, api_id:, api_key:, test: false, logger: nil)
+        @logger.info("Initialize class Pay with params: domain: #{domain}, api_id: #{api_id}, api_key: #{api_key}, test: #{test}") if !@logger.nil?
         @token = api_key
         @_auth = {domain: domain, api_id: api_id, api_key: api_key, test: test}
     end
@@ -42,14 +43,16 @@ class PaykassaPay
             tag: tag, 
             priority: priority
         }
+        @logger.info("Pay.pay with data: #{data.inspect}") if !@logger.nil?
         make_request("api_payment",data)
     end
     def balance(shop: ) 
         data = {
             shop: shop,
-            pi_id: @_auth[:api_id], 
+            api_id: @_auth[:api_id], 
             api_key: @_auth[:api_key]
         }
+        @logger.info("Pay.balance with data: #{data.inspect}") if !@logger.nil?
         make_request("api_get_shop_balance", data, false)
     end
     def currency_rate(inn:,out:)
@@ -63,6 +66,7 @@ class PaykassaPay
             currency_in: inn, 
             currency_out: out
         }
+        @logger.info("Pay.currency_rate with data: #{data.inspect}") if !@logger.nil?
         make_request(
             nil,
             data,
@@ -74,8 +78,10 @@ class PaykassaPay
     def  make_request(func,data,merge_auth = true, url= nil)
         data = data.merge({func: func}) if !func.nil?
         data = data.merge(@_auth) if merge_auth
-        url = BASE_SCI_URI if url.nil?
+        url = BASE_URL if url.nil?
+        @logger.info("private Pay.make_request with params: url: #{url.inspect}, data: #{data.inspect}") if !@logger.nil?
         res = Net::HTTP.post_form(url, data)
+        @logger.info("private Pay.make_request: result: #{res.inspect}") if !@logger.nil?
         JSON.parse(res.body).deep_symbolize_keys
     end
 

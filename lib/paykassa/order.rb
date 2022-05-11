@@ -6,7 +6,8 @@ class PaykassaOrder
 
   # def initialize(auth)
   # where auth has keys: sci_id, sci_key, domain
-  def initialize(auth)
+  def initialize(auth, logger = nil)
+    @logger = logger
     @_auth = auth
   end
 
