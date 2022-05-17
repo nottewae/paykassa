@@ -51,6 +51,8 @@ module Paykassa
         comment: comment,
         system: system
       )
+      raise StandardError.new(order[:message]) if order[:error]
+      order
     end
     def create_order(amount: , currency:, order_id:, paid_commision: , comment: "from paykassa gem", system:)
       order = @paykassa_order.create_order(

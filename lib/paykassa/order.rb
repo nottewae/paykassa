@@ -2,7 +2,29 @@ require 'net/http'
 
 class PaykassaOrder
   BASE_SCI_URI = URI('https://paykassa.pro/sci/0.3/index.php')
-
+  CURRENCIES=[
+    "USD", "RUB", "BTC", "ETH", "LTC", "DOGE", "DASH", "BCH", "ZEC",
+    "XRP", "TRX", "XLM", "BNB", "USDT", "ADA", "EOS", "GBP", "EUR", 
+    "USDC", "BUSD"
+  ]
+    SYSTEM_IDS = {
+        perfectmoney: 2,
+        berty: 7,
+        bitcoin: 11,
+        ethereum: 12,
+        litecoin: 14,
+        dogecoin: 15,
+        dash: 16,
+        bitcoincash: 18,
+        zcash: 19,
+        ripple: 22,
+        tron: 27,
+        stellar: 28,
+        binancecoin: 29,
+        tron_trc20: 30,
+        binancesmartchain_bep20: 31, # available currencies USDT, BUSD, USDC, ADA, EOS, BTC, ETH, DOGE    
+        ethereum_erc20: 32
+    }
 
   # def initialize(auth)
   # where auth has keys: sci_id, sci_key, domain
@@ -22,8 +44,7 @@ class PaykassaOrder
       phone: "false",
       paid_commission: paid_commision,
       comment: comment,
-      system: system,
-      test: @test.to_s
+      system: SYSTEM_IDS[system]
     )
   end
   def get_data(amount: , currency:, order_id:, paid_commision: , comment:, system:)
@@ -35,8 +56,7 @@ class PaykassaOrder
       phone: "false",
       paid_commission: paid_commision,
       comment: comment,
-      system: system,
-      test: @test.to_s
+      system: SYSTEM_IDS[system]
     )
   end
 
