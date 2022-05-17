@@ -10,7 +10,7 @@ module Paykassa
     def initialize(domain:, sci_id:, sci_key:, api_id: nil, api_key: nil, test:, logger: nil)
       @logger = Logger.new(logger) unless logger.nil? 
       
-      @paykassa_order = PaykassaOrder.new({domain: domain, sci_id: sci_id, sci_key: sci_key}, @logger)
+      @paykassa_order = PaykassaOrder.new({domain: domain, sci_id: sci_id, sci_key: sci_key}, @logger, test)
       if api_id.nil? 
         @paykassa_pay = nil
       else
@@ -42,13 +42,24 @@ module Paykassa
     def rate(c_in, c_out) 
       @paykassa_pay.currency_rate(c_in, c_out)
     end
-
-    def create_order(amount:, currency:, order_id:, system:, comment: "from paykassa gem")
+    def get_order_address(amount: , currency:, order_id:, paid_commision: , comment: "from paykassa gem", system:)
+      order =  @paykassa_order.get_data( amount: amount,
+        currency: currency,
+        order_id: order_id,
+        phone: "false",
+        paid_commission: paid_commision,
+        comment: comment,
+        system: system
+      )
+    end
+    def create_order(amount: , currency:, order_id:, paid_commision: , comment: "from paykassa gem", system:)
       order = @paykassa_order.create_order(
-        amount: amount, 
-        currency: currency, 
-        order_id: order_id, 
-        comment: comment, 
+        amount: amount,
+        currency: currency,
+        order_id: order_id,
+        phone: "false",
+        paid_commission: paid_commision,
+        comment: comment,
         system: system
       )
       raise StandardError.new(order[:message]) if order[:error]
