@@ -74,7 +74,10 @@ class PaykassaOrder
   private
 
   def make_request(data)
-    res = Net::HTTP.post_form(BASE_SCI_URI, data.merge(@_auth))
+    full_data = data.merge(@_auth)
+    puts BASE_SCI_URI
+    puts full_data.inspect
+    res = Net::HTTP.post_form(BASE_SCI_URI, full_data)
     JSON.parse(res.body).deep_symbolize_keys
   end
 end
