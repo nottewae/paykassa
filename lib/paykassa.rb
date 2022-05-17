@@ -46,7 +46,6 @@ module Paykassa
       order =  @paykassa_order.get_data( amount: amount,
         currency: currency,
         order_id: order_id,
-        phone: "false",
         paid_commission: paid_commission,
         comment: comment,
         system: system
@@ -59,7 +58,6 @@ module Paykassa
         amount: amount,
         currency: currency,
         order_id: order_id,
-        phone: "false",
         paid_commission: paid_commision,
         comment: comment,
         system: system
