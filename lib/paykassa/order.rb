@@ -47,14 +47,14 @@ class PaykassaOrder
       system: SYSTEM_IDS[system]
     )
   end
-  def get_data(amount: , currency:, order_id:, paid_commision: , comment:, system:)
+  def get_data(amount: , currency:, order_id:, paid_commission: , comment:, system:)
     make_request(
       func: :sci_create_order_get_data,
       amount: amount,
       currency: currency,
       order_id: order_id,
       phone: "false",
-      paid_commission: paid_commision,
+      paid_commission: paid_commission,
       comment: comment,
       system: SYSTEM_IDS[system]
     )

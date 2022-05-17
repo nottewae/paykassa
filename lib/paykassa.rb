@@ -42,12 +42,12 @@ module Paykassa
     def rate(c_in, c_out) 
       @paykassa_pay.currency_rate(c_in, c_out)
     end
-    def get_order_address(amount: , currency:, order_id:, paid_commision: , comment: "from paykassa gem", system:)
+    def get_order_address(amount: , currency:, order_id:, paid_commission: , comment: "from paykassa gem", system:)
       order =  @paykassa_order.get_data( amount: amount,
         currency: currency,
         order_id: order_id,
         phone: "false",
-        paid_commission: paid_commision,
+        paid_commission: paid_commission,
         comment: comment,
         system: system
       )
