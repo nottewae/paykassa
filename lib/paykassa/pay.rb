@@ -35,7 +35,7 @@ class PaykassaPay
     end
     def pay(amount: , shop: , currency: , system_name: , paid_commission: "shop", number:, tag:, priority:)
         data = {
-            amount: amount, 
+            amount: amount.to_f, 
             shop: shop, 
             currency: currency,
             system: SYSTEM_IDS[system_name],
