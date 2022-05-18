@@ -36,9 +36,10 @@ class PaykassaOrder
 
   # Request for create order
   def create_order(amount: , currency:, order_id:, paid_commision: , comment:, system:)
+    puts "system: #{system}"
     data =  {
       func: :sci_create_order,
-      amount: amount,
+      amount: amount.to_f,
       currency: currency,
       order_id: order_id,
       phone: "false",
@@ -52,9 +53,10 @@ class PaykassaOrder
     )
   end
   def get_data(amount: , currency:, order_id:, paid_commission: , comment:, system:)
+    puts "system: #{system}"
     data = {
       func: :sci_create_order_get_data,
-      amount: amount,
+      amount: amount.to_f,
       currency: currency,
       order_id: order_id,
       phone: "false",
